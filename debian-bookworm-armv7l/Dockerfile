@@ -1,5 +1,5 @@
 # =====================================================================
-#   SteamCMD działający na Raspberry Pi 2/3 (ARMv7, 32-bit) dzięki Box86
+#   SteamCMD running on Raspberry Pi 2/3 (ARMv7, 32-bit) using Box86
 # =====================================================================
 
 FROM debian:bookworm-slim
