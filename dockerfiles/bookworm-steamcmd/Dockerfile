@@ -1,4 +1,4 @@
-FROM japaqonik/box86:latest
+FROM japaqonik/steamcmd:box86
 
 ARG PUID=1000
 
@@ -47,4 +47,3 @@ WORKDIR ${STEAMCMDDIR}
 
 # SteamCMD CLI wrapper via Box86
 ENTRYPOINT ["box86", "steamcmd.sh"]
-

@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install build dependencies (cached layer)
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    git build-essential cmake python3 gcc g++ curl \
+    git build-essential cmake python3 gcc g++ curl ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # Clone Box86 repo (cached if Dockerfile above doesn't change)
