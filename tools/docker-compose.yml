@@ -1,0 +1,11 @@
+services:
+  steamcmd:
+    image: japaqonik/steamcmd:latest
+    container_name: steamcmd
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    volumes:
+      - ~/.steamcmd-data:/home/steam/.steam       # hidden folder for login/session data
+      - ~/steamcmd-games:/steamcmd/steam_dl       # folder for downloaded games
+    working_dir: /steamcmd
