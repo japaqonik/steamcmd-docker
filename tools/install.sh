@@ -1,19 +1,21 @@
 #!/bin/bash
 # =====================================================
 # Simple installer: create wrapper in /usr/local/bin
-# that calls the real script in ~/steamcmd-tools
+# that calls the real script relative to this installer
 # =====================================================
 
 set -euo pipefail
 
+# Directory where this installer script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 WRAPPER_PATH="/usr/local/bin/steamcmd-getgame"
-TARGET_DIR="$HOME/steamcmd-tools"
-TARGET_SCRIPT="$TARGET_DIR/steamcmd-getgame"
+TARGET_SCRIPT="$SCRIPT_DIR/steamcmd-getgame.sh"
 
 # Check that target script exists
 if [ ! -f "$TARGET_SCRIPT" ]; then
     echo "❌ ERROR: $TARGET_SCRIPT not found."
-    echo "Make sure steamcmd-getgame is in ~/steamcmd-tools."
+    echo "Make sure steamcmd-getgame.sh is in the same directory as this installer."
     exit 1
 fi
 

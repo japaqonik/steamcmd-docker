@@ -12,7 +12,9 @@ Since SteamCMD is natively built for x86 architecture, this image uses **Box86**
 
 ## Getting Started
 
-### 1. (Intel/Other Platforms Only) Set up the emulator
+### Rebuild docker images (optional)
+
+#### 1. (Intel/Other Platforms Only) Set up the emulator
 
 If you are not on ARM (e.g., Intel PC), run:
 
@@ -22,7 +24,7 @@ docker run --privileged --rm tonistiigi/binfmt --install all
 
 This allows the ARM-based Docker image to be build on x86_64 machine via emulation.
 
-### 2. Build the base Box86 image
+#### 2. Build the base Box86 image
 
 ```bash
 cd dockerfiles/bookworm-box86
@@ -31,7 +33,7 @@ docker build --platform linux/arm/v7 -t japaqonik/steamcmd:box86 .
 
 This image sets up Box86 (x86 emulator) on ARM32 and is used as the base for SteamCMD (but might be used by others as well).
 
-### 3. Build the SteamCMD image
+#### 3. Build the SteamCMD image
 
 ```bash
 cd ../bookworm-steamcmd
@@ -40,20 +42,54 @@ docker build --platform linux/arm/v7 -t japaqonik/steamcmd .
 
 This image extends japaqonik/steamcmd:box86 and installs SteamCMD.
 
-### 4. Install the helper script globally (optional)
+### Run game download
+
+#### 1. Install the helper script globally (optional)
 
 ```bash
-cd ../../tools
+cd tools
 sudo ./install.sh
 ```
 
-
 This makes steamcmd-getgame.sh available system-wide as steamcmd-getgame.
 
-### 5. Download a Steam game using its App ID
+### 2. Download a Steam game using its App ID
 
 ```bash
-steamcmd-getgame.sh <APP_ID>
+steamcmd-getgame.sh
+Usage: steamcmd-getgame.sh <STEAM_APP_ID> [--install-dir|-id <PATH>]
+```
+
+Example:
+```bash
+steamcmd-getgame.sh 730 -id ~/Downloads
 ```
 
 This uses Docker Compose to run the SteamCMD container and download the game to the appropriate volume (look at docker-compose).
+
+If *install-dir* is not provided it defaults to:
+```bash
+$HOME/steam_dl
+```
+Target *install-dir* is stored persistently in:
+```bash
+$HOME/.steamcmd-getgame.conf
+```
+so that it does not need to be provided each time when script is called. 
+
+User needs to login at first usage and the login data is stored in:
+```bash
+$HOME/.steamcmd-data
+```
+
+## References
+
+### Prebuild images
+https://hub.docker.com/repository/docker/japaqonik/steamcmd/
+
+### Box86
+https://box86.org/
+https://github.com/ptitSeb/box86
+
+### SteamCmd
+https://developer.valvesoftware.com/wiki/SteamCMD
